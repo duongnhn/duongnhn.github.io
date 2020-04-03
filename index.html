@@ -1,91 +1,130 @@
-<html>
-  <head>
-    <style>
-      html {
-        background: url("art-artist-background-316466.jpg") no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-      }
-      html, body {
-          height: 100%;
-      }
+<head>
+  <style>
+    body {
+      font-family: 'Helvetica', 'System UI', sans-serif;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
-      html {
-          display: table;
-          margin: auto;
-      }
+    .main-container {
+      position: relative;
+      margin: 0 auto;
+      width: 512px;
+    }
 
-      body {
-          display: table-cell;
-          vertical-align: middle;
-      }
-      .info {
-          position: relative;
-          margin-top: 15%;
-      }
-      .copy-right {
-          position: relative;
-          margin-top: 20%;
-      }
+    .phone {
+      width: 100%;
+    }
 
-      .submit {
-        display: inline-block; text-align: center; width: 100%;
-        margin-top: 2%;
-      }
-      .box {
-        margin-top: -3%;
-        display: inline-block; text-align: center; width: 100%;
-      }
-      .label {
-        text-align: center;
-      }
-      input[type="text"] {
-        font-size:28px;
-      }
-      input[type="submit"] {
-        font-size:20px;
-      }
-      .search-img {
-        margin-left: -5%;
-      }
+    .hotspot {
+      position: absolute;
+      top: 80px;
+      left: 60px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+    }
 
-      a {
-        color: inherit;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="search-form" style="text-align: center">
-      <form action="./result.html">
-        <div class="label"><img src="logo.png" alt="meFind" height="100" width="100"></div>
-        <div class="box">
-          <input size="20" type="text" value="" maxlength="25" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" aria-controls="sw_as">
-          <img class="search-img" src="search.png" alt="meFind" height="20" width="20">
-        </div>
-        <div class="submit">
-          <input type="submit" value="Search" style="font-family:Century Gothic">
-        </div>
-      </form>
+    .hotspot.a {
+      left: 160px;
+      top: 200px;
+    }
+
+    .hotspot.b {
+      left: 90px;
+      top: 300px;
+    }
+
+    .hotspot.c {
+      left: 160px;
+      top: 500px;
+    }
+
+    .hotspot.d {
+      left: 270px;
+      top: 524px;
+    }
+
+    .marker {
+      width: 60px;
+      height: 60px;
+      margin: 10px;
+    }
+
+    #info {
+      transition: all 0.2s ease;
+      position: absolute;
+      left: 88px;
+      top: 400px;
+    }
+
+    .info--hidden {
+      opacity: 0;
+    }
+
+    .message {
+      position: absolute;
+      top: 24px;
+      left: 40px;
+      width: 248px;
+      text-align: center;
+    }
+
+    .needle {
+      width: 330px;
+    }
+
+    .instruction {
+      position: absolute;
+      bottom: 215px;
+      left: 80px;
+      color: black;
+      font-size: 22px;
+    }
+
+    .legend {
+      position: absolute;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: medium;
+      background: white;
+      color: black;
+      padding: 4px 6px;
+      box-shadow: 0 0 16px rgba(0, 0, 0, .12);
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <img class="phone" src="./app.png">
+    <div class="hotspot a" onclick="showInfo('a')"><img class="marker" src="./High.png"></div>
+    <div class="hotspot b" onclick="showInfo('b')"><img class="marker" src="./High-3.png"></div>
+    <div class="hotspot c" onclick="showInfo('c')"><img class="marker" src="./High-1.png"></div>
+    <div class="hotspot d" onclick="showInfo('d')"><img class="marker" src="./High-2.png"></div>
+    <div id="info" class="info--hidden">
+      <img class="needle" src="./Needle-Medium.png">
+      <span class="message">You are here</span>
     </div>
-    <div class="info">
-      <p style="text-align: center">
-        <font face="Century Gothic" size="4">
-          No search or personally identifiable data is collected. </br>
-          This website is fictional and created purely for academic research purposes. </br>
-          The search bar will not produce any results.
-        </font>
-      </p>
-    </div>
+    <div class="instruction">Where is the nearest power plug?</div>
+    <div class="legend">0.1 mile, public library</div>
+  </div>
+  <script>
+    let legendMapping = {
+      'c': '.1 mile, Public Library',
+      'd': '.2 mile, Community Center',
+      'b': ".3 mile, Peet's Coffee",
+      'a': '.4 mile, Starbucks'
+    };
 
-    <div class="copy-right">
-      <p style="text-align: center">
-        <font face="Century Gothic" size="1">
-          For questions or more information, please email <a class="email" href="mailto:ctran4@uoregon.edu">ctran4@uoregon.edu.</a> </br>
-          Photo by <a href="https://www.pexels.com/photo/close-up-of-hand-holding-pencil-over-white-background-316466/">Lum3n.com</a> from Pexels
-        </font>
-      </p>
-    </div>
-  </body>
-</html>
+    function showInfo(spotClass) {
+      document.getElementById('info').className = '';
+      let hotspotEl = Array.from(document.getElementsByClassName('hotspot')).filter(el => el.className.indexOf(spotClass) >= 0)[0];
+      let legendEl = document.querySelector('.legend');
+      legendEl.style.left = hotspotEl.offsetLeft - 30;
+      legendEl.style.top = hotspotEl.offsetTop - 10;
+      legendEl.innerText = legendMapping[spotClass];
+    }
+
+  </script>
+</body>

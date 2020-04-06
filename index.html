@@ -1,7 +1,7 @@
 <head>
   <style>
     body {
-      font-family: 'Helvetica', 'System UI', sans-serif;
+      font-family: "Helvetica", "System UI", sans-serif;
       color: white;
       font-size: 18px;
       font-weight: bold;
@@ -11,6 +11,8 @@
       position: relative;
       margin: 0 auto;
       width: 512px;
+      transform-origin: top left;
+      transform: scale(0.66);
     }
 
     .phone {
@@ -37,13 +39,13 @@
     }
 
     .hotspot.c {
-      left: 160px;
+      left: 120px;
       top: 500px;
     }
 
     .hotspot.d {
-      left: 270px;
-      top: 524px;
+      left: 220px;
+      top: 544px;
     }
 
     .marker {
@@ -91,19 +93,30 @@
       background: white;
       color: black;
       padding: 4px 6px;
-      box-shadow: 0 0 16px rgba(0, 0, 0, .12);
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.12);
+      top: 200vh;
+      left: 200vw;
+      max-width: 260px;
     }
   </style>
 </head>
 <body>
   <div class="main-container">
-    <img class="phone" src="./app.png">
-    <div class="hotspot a" onclick="showInfo('a')"><img class="marker" src="./High.png"></div>
-    <div class="hotspot b" onclick="showInfo('b')"><img class="marker" src="./High-3.png"></div>
-    <div class="hotspot c" onclick="showInfo('c')"><img class="marker" src="./High-1.png"></div>
-    <div class="hotspot d" onclick="showInfo('d')"><img class="marker" src="./High-2.png"></div>
-    <div id="info" class="info--hidden">
-      <img class="needle" src="./Needle-Medium.png">
+    <img class="phone" src="./app.png" />
+    <div class="hotspot a" onclick="showInfo('a')">
+      <img class="marker" src="./High.png" />
+    </div>
+    <div class="hotspot b" onclick="showInfo('b')">
+      <img class="marker" src="./High-3.png" />
+    </div>
+    <div class="hotspot c" onclick="showInfo('c')">
+      <img class="marker" src="./High-1.png" />
+    </div>
+    <div class="hotspot d" onclick="showInfo('d')">
+      <img class="marker" src="./High-2.png" />
+    </div>
+    <div id="info">
+      <img class="needle" src="./Needle-Medium.png" />
       <span class="message">You are here</span>
     </div>
     <div class="instruction">Where is the nearest power plug?</div>
@@ -111,20 +124,21 @@
   </div>
   <script>
     let legendMapping = {
-      'c': '.1 mile, Public Library',
-      'd': '.2 mile, Community Center',
-      'b': ".3 mile, Peet's Coffee",
-      'a': '.4 mile, Starbucks'
+      a: ".4 mile, Starbucks, 12 people",
+      b: ".3 mile, Peet's Coffee, 16 people",
+      c: ".1 mile, Public Library, 24 people",
+      d: ".2 mile, Community Center, 81 ppl",
     };
 
     function showInfo(spotClass) {
-      document.getElementById('info').className = '';
-      let hotspotEl = Array.from(document.getElementsByClassName('hotspot')).filter(el => el.className.indexOf(spotClass) >= 0)[0];
-      let legendEl = document.querySelector('.legend');
+      document.getElementById("info").className = "";
+      let hotspotEl = Array.from(
+        document.getElementsByClassName("hotspot")
+      ).filter((el) => el.className.indexOf(spotClass) >= 0)[0];
+      let legendEl = document.querySelector(".legend");
       legendEl.style.left = hotspotEl.offsetLeft - 30;
       legendEl.style.top = hotspotEl.offsetTop - 10;
       legendEl.innerText = legendMapping[spotClass];
     }
-
   </script>
 </body>
